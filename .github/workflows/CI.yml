@@ -6,14 +6,18 @@ on:
     branches: main
   pull_request:
     branches: main
-
 jobs:
   build:
     runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cmake_args: ['', '-DREVERSE_MODE=ON']
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
+      - uses: Trass3r/setup-cpp@master
       - uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: win32
@@ -22,7 +26,7 @@ jobs:
         run: mkdir build && cd build
       - name: "configure cmake"
         shell: cmd
-        run: cd build && cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../install ..
+        run: cd build && cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../install ${{ matrix.cmake_args }} ..
       - name: "cmake build"
         shell: cmd
         run: cd build && cmake --build .
