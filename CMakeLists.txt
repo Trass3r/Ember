@@ -154,6 +154,7 @@ if(REVERSE_MODE)
     )
     target_compile_definitions(bootstrap_patcher PRIVATE REVERSE_MODE=1)
 else()
+    add_linker_options(-FIXED:NO)
     add_executable(bootstrap_patcher WIN32
             ${SOURCES}
             ${DK2_LIB}
