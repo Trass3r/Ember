@@ -148,13 +148,14 @@ set(SOURCES
 )
 if(REVERSE_MODE)
     enable_language(ASM_MASM)
+    add_link_options(-FIXED -DYNAMICBASE:NO)
     add_library(bootstrap_patcher SHARED
             ${SOURCES}
             ${DK2_SYMBOLS}
     )
     target_compile_definitions(bootstrap_patcher PRIVATE REVERSE_MODE=1)
 else()
-    add_linker_options(-FIXED:NO)
+    add_link_options(-FIXED:NO -DYNAMICBASE)
     add_executable(bootstrap_patcher WIN32
             ${SOURCES}
             ${DK2_LIB}
