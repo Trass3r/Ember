@@ -591,6 +591,6 @@ bool initStacktrace() {
   if(!loadStack()) return false;
 //  if(!replaceXrefs(funptr<&dk2::main>(), proxy_main)) return false;
   // better. catches all threads
-  SetUnhandledExceptionFilter(TopLevelExceptionFilter);
+  //SetUnhandledExceptionFilter(TopLevelExceptionFilter);
   return true;
 }
